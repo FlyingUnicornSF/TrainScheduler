@@ -1,0 +1,22 @@
+.jumbotron {
+  background-color: saddlebrown;
+  color: white;
+}
+
+.panel {
+  min-width: 1000px;
+  border: 1px;
+  border-style: solid;
+  border-color: #2187f3;
+}
+
+.panel-heading {
+  border-color: inherit; 
+  background-color: #2187f3;
+  color: white;
+}
+
+hr {
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
