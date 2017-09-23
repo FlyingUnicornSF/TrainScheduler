@@ -5,43 +5,48 @@
   <title>Train Scheduler</title>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="assets/style/style.css">
 </head>
+<link rel="stylesheet" href="assets/style/style.css" type="text/css">
 <body>
   <div class="jumbotron text-center"><h1 >Anytime is a train time</h1><br><h3>choo choo.... ....</h3></div> 
 
   <div class="container">
   
-  <div class="row">
+  <div class="row train-schedule-container">
     <div class="panel">
       <div class="panel-heading">
         <h3 class="panel-title">Panel title</h3>
       </div>
-      <div class="panel-body schedule row">
-        <div class="col-md-3">
-          train name
-        </div>
-        <div class="col-md-3">
-          Destination
-        </div>
-        <div class="col-md-2">
-          Frequency (min)
-        </div>
-        <div class="col-md-2">
-          Next Arrival
-        </div>
-        <div class="col-md-2">
-          Minutes Away
-        </div>
-      </div> <!--closing schedule -->
+      <div class="panel-body schedule">
+        <div class="row">
+          <div class="col-md-2">
+            train name
+          </div>
+          <div class="col-md-2">
+            Destination
+          </div>
+          <div class="col-md-2">
+            Frequency (min)
+          </div>
+          <div class="col-md-2">
+            Next Arrival
+          </div>
+          <div class="col-md-2">
+            Minutes Away
+          </div>
+          <div class="col-md-2">
+            change/remove
+          </div>
+        </div>  <!-- Closing row-->
       <hr>
-    </div> <!--closing panel 1 -->
-  </div> <!-- closing first row -->
+      </div> <!--closing panel boby-->
+    </div><!--closing panel-->
+  </div> <!-- train-schedule-container-->
 
-  <div class="row">
+  <div class="row input-container">
     <div class="panel">
       <div class="panel-heading">
         <h3 class="panel-title">Panel title</h3>
@@ -49,32 +54,33 @@
       <div class="panel-body">
         <form>
           <div class="form-group">
-            <label for="exampleInputEmail1">Train Name</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Train Name">
+            <label for="train-name">Train Name</label>
+            <input type="text" class="form-control" id="train-name" placeholder="Train Name">
           </div>
           <div class="form-group">
-            <label for="exampleInputPassword1">Destination</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Destination">
+            <label for="destination">Destination</label>
+            <input type="text" class="form-control" id="destination" placeholder="Destination">
           </div>
           <div class="form-group">
-            <label for="exampleInputEmail1">First Train Time</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="First Train Time">
+            <label for="first-train-time">First Train Time</label>
+            <input type="time" class="form-control" id="first-train-time" placeholder="First Train Time">
           </div>
           <div class="form-group">
-            <label for="exampleInputPassword1">Frequency</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Frequency">
+            <label for="frequency">Frequency (in minutes)</label>
+            <input type="number" class="form-control" id="frequency" placeholder="Frequency">
           </div>
-          <button type="submit" class="btn btn-default">Submit</button>
+          <button id="submit-button" type="submit" class="btn btn-default">Submit</button>
         </form>
       </div>
-    </div> <!--closing panel 1 -->
-  </div> <!-- closing first row -->
+    </div> <!--closing panel -->
+  </div> <!-- closing input-container -->
 
   </div> <!-- closing container -->
- 
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
 
+
+<script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
+<script src="assets/script/script.js"></script>
 </body>
 </html>
   
