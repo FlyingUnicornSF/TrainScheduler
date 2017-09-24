@@ -11,26 +11,29 @@
   firebase.initializeApp(config);
 
 var database = firebase.database();
-console.log(database)
-//get info from firebase 
 
-//database.ref("/trains").on('value', snapShot, errorLog);
+//get data from firebase on value change
 database.ref().on('value', snapShot, errorLog);
 
 function snapShot(snap) {
   var snapData = snap.val();
-  var trainData = Object.values(snapData.trains)
-
+  var trainData = Object.values(snapData.trains);
+  //empty schedule element before loading the train schedule 
+  $('.schedule').empty();
   trainData.forEach(function(train){
-   console.log(train.trainName)
-    var waitTime = trainScheduler.timeCal(train.frequency, train.firstTrainTime);  
+    //call function to calculate wait time and next train arrival time
+
+    var nextTrainInfo = trainScheduler.timeCal(train.frequency, train.firstTrainTime);
+    // build elements to lead the train information 
     var rowDiv = $('<div class="row">');
     rowDiv.append($('<div class="col-md-2">').text(train.trainName));
     rowDiv.append($('<div class="col-md-2">').text(train.destination));
     rowDiv.append($('<div class="col-md-2">').text(train.frequency));
-    rowDiv.append($('<div class="col-md-2">').text(train.frequency));
-    rowDiv.append($('<div class="col-md-2">').text(waitTime));
+    rowDiv.append($('<div class="col-md-2">').text(nextTrainInfo[1]));
+    rowDiv.append($('<div class="col-md-2">').text(nextTrainInfo[0]));
     $('.schedule').append(rowDiv);
+    $('.schedule').append("<hr>");
+
   });
 };
 
@@ -44,7 +47,7 @@ var trainScheduler = {
     var trainName = $("#train-name").val();
     var destination = $("#destination").val();
     var firstTrainTime = $("#first-train-time").val();
-    var frequency = $("#frequency").val();
+    var frequency = $("#frequency").val();    
     trainScheduler.pushTrainData(trainName, destination, firstTrainTime,frequency);
     $("#train-name").val('');
     $("#destination").val('');
@@ -67,20 +70,33 @@ var trainScheduler = {
     var d = new Date();
     var h = d.getHours();
     var m = d.getMinutes();
-    var currentinMin = h * 60;
-    console.log(h+":"+m);
-    console.log(currentinMin);
+    var currenTimeinMin = h * 60 + m;
 
     //get the first train time and have it as an array then get hr and min
     var hm = firstTrain.split(":");
     var firstTrainTimeinMin = parseInt(hm[0])*60 + parseInt(hm[1]);
     
-    if(firstTrainTimeinMin > currentinMin) {
-      var waitTime = firstTrainTimeinMin - currentinMin;
-    } else if(firstTrainTimeinMin <= currentinMin) {
-      var waitTime = frequency - ((currentinMin - firstTrainTimeinMin) % frequency);
+    if(firstTrainTimeinMin > currenTimeinMin) {
+      var waitTime = firstTrainTimeinMin - currenTimeinMin;
+    } else if(firstTrainTimeinMin <= currenTimeinMin) {
+      var waitTime = frequency - (currenTimeinMin - firstTrainTimeinMin) % frequency;
     }
-    return waitTime;
+    // from wait time, calculate next train Hour and Min 
+    var nextTrainHr = Math.floor((waitTime + currenTimeinMin)/60);
+    var nextTrainMin = (m + waitTime) % 60;
+
+    if(nextTrainMin<10){
+      var nextTrainMin = "0" + nextTrainMin;
+    }
+
+    if(nextTrainHr>24){
+      var nextTrainHr = nextTrainHr-24;
+    }
+
+    // send back the wait time and next train time
+    var nextTrainTime = nextTrainHr + ":" + nextTrainMin;
+    return [waitTime, nextTrainTime]; 
+
   },
 
 
@@ -92,7 +108,7 @@ var trainScheduler = {
   $("#submit-button").on("click", function() {
     event.preventDefault();
     trainScheduler.getInfo();
-    //trainScheduler.time();
+    
   
   });  
 
